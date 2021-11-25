@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Module2HW5.Helpers;
 
 namespace Module2HW5.Services
 {
@@ -14,21 +13,17 @@ namespace Module2HW5.Services
 
         public FileStreamService(string filename, FileMode mode)
         {
-            try
-            {
-                _stream = new FileStream(filename, mode);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"The process failed: {e}");
-            }
+            _stream = new FileStream(filename, mode);
         }
 
         public bool WriteLine(string text)
         {
             if (_stream.CanWrite)
             {
-                StreamHelper.AddText(_stream, $"\n{text}");
+                byte[] info = new UTF8Encoding(true).GetBytes($"{text}\n");
+                _stream.Write(info, 0, info.Length);
+                _stream.Flush();
+
                 return true;
             }
 

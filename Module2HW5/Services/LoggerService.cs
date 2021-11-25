@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using Module2HW5.Services.Abstractions;
 using Module2HW5.Models.Enumerations;
 
@@ -15,7 +17,7 @@ namespace Module2HW5.Services
 
         public void Log(EventLevel eventLevel, string message)
         {
-            string buffer = $"{DateTime.UtcNow}: {eventLevel}: {message}";
+            var buffer = $"{DateTime.UtcNow}: {eventLevel}: {message}";
             _fileService.WriteLine(buffer);
             Console.WriteLine(buffer);
         }
